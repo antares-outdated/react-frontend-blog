@@ -5,8 +5,9 @@ const instanse = axios.create({
 })
 
 export const postsAPI = {
-    getPosts() {
-        return instanse.get('posts').then(response => {
+    getPosts(postId) {
+        debugger
+        return instanse.get(`posts${postId ? '/' + postId : ''}`).then(response => {
             return response.data
         })
     }

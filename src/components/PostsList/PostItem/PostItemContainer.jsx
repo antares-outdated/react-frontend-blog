@@ -1,9 +1,7 @@
 import React from 'react'
 import PostsList from './PostsList'
-import {getPostsThunk} from '../../redux/reducer'
+import {getPostsThunk} from './../../redux/postslist-reducer'
 import {connect} from 'react-redux'
-
-// store.getState().postsList.items.length
 
 class PostsListContainer extends React.Component {
     componentDidMount() {
@@ -15,7 +13,7 @@ class PostsListContainer extends React.Component {
     }
 }
 let mapStateToProps = (state) => ({
-    posts: state.reducer.posts
+    posts: state.postsList.items
 })
 
 

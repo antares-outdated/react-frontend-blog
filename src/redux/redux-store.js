@@ -1,9 +1,9 @@
 import {applyMiddleware, combineReducers, createStore} from 'redux'
 import thunk from 'redux-thunk'
-import postsListReducer from './postslist-reducer'
+import reducer from './reducer'
 
 let reducers = combineReducers({
-    postsList: postsListReducer
+    reducer: reducer,
 })
 
 let store = createStore(reducers, applyMiddleware(thunk))
