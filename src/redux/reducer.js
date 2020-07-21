@@ -1,6 +1,7 @@
 import {postsAPI} from '../api/api'
 const GET_POSTS = 'GET_POSTS'
 const GET_POST_FULL = 'GET_POST_FULL'
+const DEL_POST_FULL = 'DEL_POST_FULL'
 
 
 let initialState = {
@@ -15,14 +16,19 @@ const reducer = ( state=initialState, action ) => {
       }
       case GET_POST_FULL: {
         return { ...state, postFull: action.postFull }
-    }
+      }
+      case DEL_POST_FULL: {
+        return { ...state, postFull: [] }
+      }
       default: 
-            return state
+        return state
     }
 }
 
 export const getPosts = (posts) => ({type: GET_POSTS, posts})
-export const getPostFull = (postFull) => ({ type:GET_POST_FULL, postFull})
+export const getPostFull = (postFull) => ({type: GET_POST_FULL, postFull})
+
+export const delPostFull = () => ({type: DEL_POST_FULL})
 
 
 export const getPostsThunk = () => (dispatch) => {
@@ -35,6 +41,10 @@ export const getPostFullThunk = (postId) => (dispatch) => {
     postsAPI.getPosts(postId).then(response => {
         dispatch(getPostFull(response))
     })
+}
+
+export const delPostFullThunk = (postId) => (dispatch) => {
+  postsAPI.delPost(postId)
 }
 
 export default reducer

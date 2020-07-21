@@ -6,9 +6,13 @@ const instanse = axios.create({
 
 export const postsAPI = {
     getPosts(postId) {
-        debugger
         return instanse.get(`posts${postId ? '/' + postId : ''}`).then(response => {
             return response.data
+        })
+    },
+    delPost(postId) {
+        return instanse.delete(`posts/${postId}`).then(response => {
+            return response.status
         })
     }
 }
