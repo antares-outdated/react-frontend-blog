@@ -12,7 +12,12 @@ export const postsAPI = {
     },
     delPost(postId) {
         return instanse.delete(`posts/${postId}`).then(response => {
-            return response.status
+            return response.data
+        })
+    },
+    addPost(title, text, imageUrl) {
+        return instanse.post(`posts`, {title, text, imageUrl}).then(response => {
+            return response.data
         })
     }
 }

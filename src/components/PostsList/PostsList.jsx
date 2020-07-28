@@ -1,5 +1,6 @@
 import React from 'react'
 import PostItem from './PostItem/PostItem'
+import { NavLink } from 'react-router-dom'
 
 const PostsList = (props) => {
     const PostItemEl = props.posts.map(el => <PostItem 
@@ -12,7 +13,10 @@ const PostsList = (props) => {
     />)
 
     return (
-        <div>{PostItemEl}</div>
+        <div>
+        <NavLink to={`addpost`}><button className='btn btn-primary mb-4'>create new post</button></NavLink>
+        {PostItemEl}
+        </div>
     )
 }
 

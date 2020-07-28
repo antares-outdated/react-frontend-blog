@@ -7,7 +7,6 @@ import {withRouter} from 'react-router-dom'
 
 class PostFullContainer extends React.Component {
     componentDidMount() {
-        debugger
         let postId = this.props.match.params.postId
         this.props.getPostFullThunk(postId)
     }

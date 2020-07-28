@@ -3,8 +3,6 @@ import PostsList from './PostsList'
 import {getPostsThunk} from '../../redux/reducer'
 import {connect} from 'react-redux'
 
-// store.getState().postsList.items.length
-
 class PostsListContainer extends React.Component {
     componentDidMount() {
         this.props.getPostsThunk()

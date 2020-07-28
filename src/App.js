@@ -5,16 +5,19 @@ import PostFullContainer from './components/FullPost/PostFullContainer'
 import NotFound from './components/NotFound/NotFound'
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import AddPostContainer from './components/AddPost/AddPostContainer'
 
 
 function App() {
   return (
     <BrowserRouter>
-      <div className='App my-lg-4'>
+      <div className='app my-lg-4'>
       <div className='container'>
         <Switch>
           <Route path='/posts' exact component={PostsListContainer}/>
           <Route path='/posts/:postId' exact component={PostFullContainer}/>
+          <Route path='/addpost' exact component={AddPostContainer}/>
+
           <Route path='*' component={NotFound}/>
         </Switch>
         </div>
