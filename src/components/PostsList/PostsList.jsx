@@ -8,8 +8,6 @@ const PostsList = (props) => {
     key={el._id} 
     title={el.title} 
     text={el.text}
-    createdAt={el.createdAt}
-    updatedAt={el.updatedAt}
     />)
 
     return (

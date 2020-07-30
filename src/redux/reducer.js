@@ -84,19 +84,24 @@ export const getPostFullThunk = (postId) => (dispatch) => {
 }
 
 export const delPostFullThunk = (postId) => (dispatch) => {
-  postsAPI.delPost(postId)
+  if (global.confirm('Вы действительно хотите удалить статью?')) {
+    postsAPI.delPost(postId)
+  }
 }
 
 export const addPostThunk = (title, text, imageUrl) => (dispatch) => {
   postsAPI.addPost(title, text, imageUrl).then(response => {
     dispatch(addPost(response.data))
+    global.confirm('Пост был создан.')
   })
 }
 
 export const editPostThunk = (title, text, imageUrl, postId) => (dispatch) => {
-  postsAPI.editPost(title, text, imageUrl, postId).then(response => {
-    dispatch(editPost(response.data))
-  })
+  if (global.confirm('Вы действительно хотите изменить статью?')) {
+    postsAPI.editPost(title, text, imageUrl, postId).then(response => {
+      dispatch(editPost(response.data))
+    })
+  }
 }
 
 export default reducer
