@@ -1,13 +1,12 @@
 import React from 'react'
 
-const AddPost = (props) => {
-
+const EditPost = (props) => {
     const title = React.createRef()
     const img = React.createRef()
     const text = React.createRef()
 
-    let newPost = () => {
-        props.addPostThunk(title.current.value, text.current.value, img.current.value, )
+    let editPost = () => {
+        props.EditPostThunk(title.current.value, text.current.value, img.current.value, props.match.params.postId)
     }
 
     return (
@@ -25,9 +24,9 @@ const AddPost = (props) => {
                 </div>
                 <textarea className="form-control" aria-label="With textarea" ref={text} placeholder="text"></textarea>
             </div>
-            <button className='btn btn-primary mt-4' onClick={newPost}>add post</button>
+            <button className='btn btn-primary mt-4' onClick={editPost}>edit post</button>
         </div>
     )
 }
 
-export default AddPost
+export default EditPost

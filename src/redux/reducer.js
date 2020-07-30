@@ -3,6 +3,7 @@ const GET_POSTS = 'GET_POSTS'
 const GET_POST_FULL = 'GET_POST_FULL'
 const DEL_POST_FULL = 'DEL_POST_FULL'
 const ADD_POST = 'ADD_POST'
+const EDIT_POST= 'EDIT_POST'
 
 
 let initialState = {
@@ -20,6 +21,17 @@ const reducer = ( state=initialState, action ) => {
       }
       case DEL_POST_FULL: {
         return { ...state, postFull: [] }
+      }
+      case EDIT_POST: {
+        let editPost = {
+          title: action.title,
+          description: action.text,
+          img: action.imageUrl
+        }
+        return {
+          ...state,
+          posts: [...state.posts, editPost]
+        }
       }
       case ADD_POST: {
         let newPost = {
@@ -40,6 +52,15 @@ export const getPosts = (posts) => ({type: GET_POSTS, posts})
 export const getPostFull = (postFull) => ({type: GET_POST_FULL, postFull})
 
 export const delPostFull = () => ({type: DEL_POST_FULL})
+
+export const editPost = (title, text, imageUrl) => {
+  return {
+    type: EDIT_POST,
+    title: title,
+    text: text,
+    imageUrl: imageUrl
+  }
+}
 
 export const addPost = (title, text, imageUrl) => {
   return {
@@ -69,6 +90,12 @@ export const delPostFullThunk = (postId) => (dispatch) => {
 export const addPostThunk = (title, text, imageUrl) => (dispatch) => {
   postsAPI.addPost(title, text, imageUrl).then(response => {
     dispatch(addPost(response.data))
+  })
+}
+
+export const editPostThunk = (title, text, imageUrl, postId) => (dispatch) => {
+  postsAPI.editPost(title, text, imageUrl, postId).then(response => {
+    dispatch(editPost(response.data))
   })
 }
 

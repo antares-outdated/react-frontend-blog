@@ -1,6 +1,6 @@
 import React from 'react'
 import PostFull from './PostFull'
-import {getPostFullThunk, delPostFullThunk} from './../../redux/reducer.js'
+import {getPostFullThunk, delPostFullThunk, editPostThunk} from './../../redux/reducer.js'
 import {connect} from 'react-redux'
 import {compose} from 'redux'
 import {withRouter} from 'react-router-dom'
@@ -12,7 +12,7 @@ class PostFullContainer extends React.Component {
     }
 
     render() {
-        return <PostFull post={this.props.post} delPostFullThunk={delPostFullThunk}/>
+        return <PostFull post={this.props.post} editPostThunk={editPostThunk} delPostFullThunk={delPostFullThunk}/>
     }
 }
 let mapStateToProps = (state) => ({
@@ -26,6 +26,9 @@ let mapDispatchToProps = (dispatch) => ({
     },
     delPostFullThunk: (postId) => {
         dispatch(delPostFullThunk(postId))
+    },
+    editPostThunk: (postId) => {
+        dispatch(editPostThunk(postId))
     }
 })
 export default compose (
