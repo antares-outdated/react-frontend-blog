@@ -13,7 +13,7 @@ class PostsListContainer extends React.Component {
     }
 }
 let mapStateToProps = (state) => ({
-    posts: state.reducer.posts
+    posts: state.posts
 })
 
 

@@ -1,4 +1,5 @@
 import React from 'react'
+import {NavLink} from 'react-router-dom'
 
 const AddPost = (props) => {
 
@@ -12,7 +13,7 @@ const AddPost = (props) => {
 
     return (
         <div>
-            <div className="input-group mb-3">
+            <div className="input-group my-3">
                 <input type="text" className="form-control" ref={title} placeholder="title" aria-label="Recipient's username" aria-describedby="basic-addon2"/>
                 <div className="input-group-append"></div>
             </div>
@@ -25,7 +26,8 @@ const AddPost = (props) => {
                 </div>
                 <textarea className="form-control" aria-label="With textarea" ref={text} placeholder="text"></textarea>
             </div>
-            <button className='btn btn-primary mt-4' onClick={newPost}>add post</button>
+            <NavLink to={`/`}><button className='btn btn-secondary my-3'>back</button></NavLink>
+            <NavLink to='/'><button className='btn btn-primary my-3 ml-2' onClick={newPost}>add post</button></NavLink>
         </div>
     )
 }

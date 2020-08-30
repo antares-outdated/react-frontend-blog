@@ -16,7 +16,7 @@ class PostFullContainer extends React.Component {
     }
 }
 let mapStateToProps = (state) => ({
-    post: state.reducer.postFull
+    post: state.postFull
 })
 
 

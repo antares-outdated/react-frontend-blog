@@ -20,7 +20,10 @@ const reducer = ( state=initialState, action ) => {
         return { ...state, postFull: action.postFull }
       }
       case DEL_POST_FULL: {
-        return { ...state, postFull: [] }
+        return {
+          ...state.posts,
+          posts: [...state.posts.filter(id => id._id === action.postId)]
+        }
       }
       case EDIT_POST: {
         let editPost = {
@@ -51,7 +54,7 @@ const reducer = ( state=initialState, action ) => {
 export const getPosts = (posts) => ({type: GET_POSTS, posts})
 export const getPostFull = (postFull) => ({type: GET_POST_FULL, postFull})
 
-export const delPostFull = () => ({type: DEL_POST_FULL})
+export const delPostFull = (postId) => ({type: DEL_POST_FULL, postId})
 
 export const editPost = (title, text, imageUrl) => {
   return {
@@ -92,7 +95,6 @@ export const delPostFullThunk = (postId) => (dispatch) => {
 export const addPostThunk = (title, text, imageUrl) => (dispatch) => {
   postsAPI.addPost(title, text, imageUrl).then(response => {
     dispatch(addPost(response.data))
-    global.confirm('Пост был создан.')
   })
 }
 
