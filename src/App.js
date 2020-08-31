@@ -18,7 +18,7 @@ function App() {
       <Header/>
       <div className='container'>
         <Switch>
-          <Route path='/' exact component={PostsListContainer}/>
+          <Route path='/posts' exact component={PostsListContainer}/>
           <Route path='/posts/:postId' exact component={PostFullContainer}/>
           <Route path='/edit/:postId' exact component={EditPostContainer}/>
           <Route path='/addpost' exact component={AddPostContainer}/>

@@ -8,7 +8,7 @@ const AddPost = (props) => {
     const text = React.createRef()
 
     let newPost = () => {
-        props.addPostThunk(title.current.value, text.current.value, img.current.value, )
+        props.addPostThunk(title.current.value, text.current.value, img.current.value)
     }
 
     return (
@@ -26,8 +26,9 @@ const AddPost = (props) => {
                 </div>
                 <textarea className="form-control" aria-label="With textarea" ref={text} placeholder="text"></textarea>
             </div>
-            <NavLink to={`/`}><button className='btn btn-secondary my-3'>back</button></NavLink>
-            <NavLink to='/'><button className='btn btn-primary my-3 ml-2' onClick={newPost}>add post</button></NavLink>
+            <NavLink to={`/posts`}><button className='btn btn-secondary my-3'>back</button></NavLink>
+
+            <NavLink to='/posts'><button className='btn btn-primary my-3 ml-2' onClick={newPost}>add post</button></NavLink>
         </div>
     )
 }

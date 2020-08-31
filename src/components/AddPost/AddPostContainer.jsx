@@ -10,10 +10,6 @@ let mapDispatchToProps = (dispatch) => {
     }
 }
 
-let mapStateToProps = (state) => {
-    return state
-}
-
-const AddPostConstainer = connect(mapStateToProps, mapDispatchToProps)(AddPost)
+const AddPostConstainer = connect(null, mapDispatchToProps)(AddPost)
 
 export default AddPostConstainer

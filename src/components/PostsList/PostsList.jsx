@@ -8,6 +8,7 @@ const PostsList = (props) => {
     key={el._id}
     title={el.title}
     text={el.text}
+    delPostFull={props.delPostFull}
     />)
 
     return (

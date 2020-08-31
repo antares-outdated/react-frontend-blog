@@ -12,11 +12,12 @@ class PostFullContainer extends React.Component {
     }
 
     render() {
-        return <PostFull post={this.props.post} editPostThunk={editPostThunk} delPostFullThunk={delPostFullThunk}/>
+        return <PostFull post={this.props.post} loading={this.props.loading} editPostThunk={editPostThunk} delPostFullThunk={delPostFullThunk}/>
     }
 }
 let mapStateToProps = (state) => ({
-    post: state.postFull
+    post: state.postFull,
+    loading: state.loading
 })
 
 

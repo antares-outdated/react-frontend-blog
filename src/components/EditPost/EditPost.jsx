@@ -31,8 +31,8 @@ const EditPost = (props) => {
                 </div>
                 <textarea className="form-control" aria-label="With textarea" ref={text} placeholder="text"></textarea>
             </div>
-            <NavLink to='/'><button className='btn btn-secondary'>back</button></NavLink>
-            <NavLink to='/'><button className='btn btn-primary ml-2 '  onClick={editPost}>edit post</button></NavLink>
+            <NavLink to='/posts'><button className='btn btn-secondary'>back</button></NavLink>
+            <NavLink to='/posts'><button className='btn btn-primary ml-2 '  onClick={editPost}>edit post</button></NavLink>
         </div>
     )
 }

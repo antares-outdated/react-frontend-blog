@@ -4,11 +4,13 @@ const GET_POST_FULL = 'GET_POST_FULL'
 const DEL_POST_FULL = 'DEL_POST_FULL'
 const ADD_POST = 'ADD_POST'
 const EDIT_POST= 'EDIT_POST'
+const LOADING= 'LOADING'
 
 
 let initialState = {
     posts: [],
-    postFull: []
+    postFull: [],
+    loading: false
 }
 
 const reducer = ( state=initialState, action ) => {
@@ -17,13 +19,16 @@ const reducer = ( state=initialState, action ) => {
         return { ...state, posts: action.posts }
       }
       case GET_POST_FULL: {
-        return { ...state, postFull: action.postFull }
+        return { ...state, postFull: action.postFull, loading: false }
       }
       case DEL_POST_FULL: {
         return {
           ...state.posts,
-          posts: [...state.posts.filter(id => id._id === action.postId)]
+          posts: [...state.posts.filter(id => id._id !== action.postId)]
         }
+      }
+      case LOADING: {
+        return {...state.loading, loading: true}
       }
       case EDIT_POST: {
         let editPost = {
@@ -55,6 +60,8 @@ export const getPosts = (posts) => ({type: GET_POSTS, posts})
 export const getPostFull = (postFull) => ({type: GET_POST_FULL, postFull})
 
 export const delPostFull = (postId) => ({type: DEL_POST_FULL, postId})
+
+// const loading = () => ({type: LOADING})
 
 export const editPost = (title, text, imageUrl) => {
   return {
@@ -88,7 +95,9 @@ export const getPostFullThunk = (postId) => (dispatch) => {
 
 export const delPostFullThunk = (postId) => (dispatch) => {
   if (global.confirm('Вы действительно хотите удалить статью?')) {
-    postsAPI.delPost(postId)
+    postsAPI.delPost(postId).then(resopnse => { 
+      dispatch(delPostFull(postId))
+    })
   }
 }
 
