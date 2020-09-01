@@ -1,8 +1,10 @@
+import {addPostThunk} from './../../redux/reducer'
+import {connect} from 'react-redux'
+
 import React from 'react'
 import {NavLink} from 'react-router-dom'
 
 const AddPost = (props) => {
-
     const title = React.createRef()
     const img = React.createRef()
     const text = React.createRef()
@@ -33,4 +35,12 @@ const AddPost = (props) => {
     )
 }
 
-export default AddPost
+let mapDispatchToProps = (dispatch) => {
+    return {
+        addPostThunk: (title, img, text) => {
+            dispatch(addPostThunk(title,img,text))
+        }
+    }
+}
+
+export default connect(null, mapDispatchToProps)(AddPost)

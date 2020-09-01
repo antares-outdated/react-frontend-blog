@@ -32,6 +32,7 @@ const reducer = ( state=initialState, action ) => {
       }
       case EDIT_POST: {
         let editPost = {
+          _id: 1,
           title: action.title,
           description: action.text,
           img: action.imageUrl
@@ -43,6 +44,7 @@ const reducer = ( state=initialState, action ) => {
       }
       case ADD_POST: {
         let newPost = {
+          _id: 1,  
           title: action.title,
           description: action.text,
           img: action.img
@@ -63,7 +65,7 @@ export const delPostFull = (postId) => ({type: DEL_POST_FULL, postId})
 
 // const loading = () => ({type: LOADING})
 
-export const editPost = (title, text, imageUrl) => {
+export const editPost = (title, text, imageUrl, postId) => {
   return {
     type: EDIT_POST,
     title: title,
@@ -74,7 +76,7 @@ export const editPost = (title, text, imageUrl) => {
 
 export const addPost = (title, text, imageUrl) => {
   return {
-    type: ADD_POST, 
+    type: ADD_POST,
     title: title,
     text: text,
     imageUrl: imageUrl
@@ -103,14 +105,14 @@ export const delPostFullThunk = (postId) => (dispatch) => {
 
 export const addPostThunk = (title, text, imageUrl) => (dispatch) => {
   postsAPI.addPost(title, text, imageUrl).then(response => {
-    dispatch(addPost(response.data))
+    dispatch(addPost(title, text, imageUrl))
   })
 }
 
 export const editPostThunk = (title, text, imageUrl, postId) => (dispatch) => {
   if (global.confirm('Вы действительно хотите изменить статью?')) {
     postsAPI.editPost(title, text, imageUrl, postId).then(response => {
-      dispatch(editPost(response.data))
+      dispatch(editPost(title, text, imageUrl))
     })
   }
 }
