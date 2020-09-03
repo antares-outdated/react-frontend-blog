@@ -19,10 +19,12 @@ export const postsAPI = {
     },
     addPost(title, text, imageUrl) {
         return instanse.post(`addpost`, {title, text, imageUrl}).then(response => {
-            // return the modified data
+            // return { status: 'ok' }
             return response.data 
         })
     },
+
+    // !!! FIXING !!!
     editPost(title, text, imageUrl, postId) {
         return instanse.patch(`edit/${postId}`, {title, text, imageUrl}).then(response => {
             // return the modified data

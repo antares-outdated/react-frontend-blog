@@ -4,13 +4,10 @@ const GET_POST_FULL = 'GET_POST_FULL'
 const DEL_POST_FULL = 'DEL_POST_FULL'
 const ADD_POST = 'ADD_POST'
 const EDIT_POST= 'EDIT_POST'
-const LOADING= 'LOADING'
-
 
 let initialState = {
     posts: [],
     postFull: [],
-    loading: false
 }
 
 const reducer = ( state=initialState, action ) => {
@@ -19,7 +16,7 @@ const reducer = ( state=initialState, action ) => {
         return { ...state, posts: action.posts }
       }
       case GET_POST_FULL: {
-        return { ...state, postFull: action.postFull, loading: false }
+        return { ...state, postFull: action.postFull }
       }
       case DEL_POST_FULL: {
         return {
@@ -27,26 +24,21 @@ const reducer = ( state=initialState, action ) => {
           posts: [...state.posts.filter(id => id._id !== action.postId)]
         }
       }
-      case LOADING: {
-        return {...state.loading, loading: true}
-      }
       case EDIT_POST: {
         let editPost = {
-          _id: 1,
+          _id: action.postId,
           title: action.title,
           description: action.text,
           img: action.imageUrl
         }
         return {
-          ...state,
-          posts: [...state.posts, editPost]
+          posts: [...state.posts.map(post => post._id === action.postId), editPost ]
         }
       }
       case ADD_POST: {
         let newPost = {
-          _id: 1,  
           title: action.title,
-          description: action.text,
+          text: action.text,
           img: action.img
         }
         return { 
@@ -63,23 +55,22 @@ export const getPostFull = (postFull) => ({type: GET_POST_FULL, postFull})
 
 export const delPostFull = (postId) => ({type: DEL_POST_FULL, postId})
 
-// const loading = () => ({type: LOADING})
-
 export const editPost = (title, text, imageUrl, postId) => {
   return {
     type: EDIT_POST,
+    _id: postId,
     title: title,
     text: text,
     imageUrl: imageUrl
   }
 }
 
-export const addPost = (title, text, imageUrl) => {
+export const addPost = (title, text, img) => {
   return {
     type: ADD_POST,
     title: title,
     text: text,
-    imageUrl: imageUrl
+    imageUrl: img
   }
 }
 
@@ -103,9 +94,9 @@ export const delPostFullThunk = (postId) => (dispatch) => {
   }
 }
 
-export const addPostThunk = (title, text, imageUrl) => (dispatch) => {
-  postsAPI.addPost(title, text, imageUrl).then(response => {
-    dispatch(addPost(title, text, imageUrl))
+export const addPostThunk = (title, text, img) => (dispatch) => {
+  postsAPI.addPost(title, text, img).then(response => {
+    dispatch(addPost(title, text, img))
   })
 }
 

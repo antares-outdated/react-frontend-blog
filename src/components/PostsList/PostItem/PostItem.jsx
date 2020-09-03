@@ -7,7 +7,6 @@ const PostItem = (props) => {
         props.delPostFull(props.postId)
     }
 
-
     return (
         <div>
             <div>
