@@ -3,6 +3,7 @@ import PostFull from './PostFull'
 import {getPostFullThunk, delPostFullThunk, editPostThunk} from './../../redux/reducer.js'
 import {connect} from 'react-redux'
 import {compose} from 'redux'
+import preloader from './../../assets/images/5.svg'
 import {withRouter} from 'react-router-dom'
 
 class PostFullContainer extends React.Component {
@@ -11,13 +12,24 @@ class PostFullContainer extends React.Component {
         this.props.getPostFullThunk(postId)
     }
 
+    // render() {
+    //     return <>
+    //     {this.props.loader ? <img src={preloader}/> : null} 
+    //     <PostFull post={this.props.post} editPostThunk={editPostThunk} delPostFullThunk={delPostFullThunk}/>
+    //     </>
+    // }
+
     render() {
-        return <PostFull post={this.props.post} loading={this.props.loading} editPostThunk={editPostThunk} delPostFullThunk={delPostFullThunk}/>
+        return <>
+        {this.props.loader 
+            ? <img src={preloader} alt=""/>
+            : <PostFull post={this.props.post} editPostThunk={editPostThunk} delPostFullThunk={delPostFullThunk}/>}
+        </>
     }
 }
 let mapStateToProps = (state) => ({
     post: state.postFull,
-    loading: state.loading
+    loader: state.loader
 })
 
 

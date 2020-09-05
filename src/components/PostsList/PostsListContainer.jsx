@@ -1,7 +1,8 @@
 import React from 'react'
 import PostsList from './PostsList'
-import {getPostsThunk, delPostFullThunk} from '../../redux/reducer'
-import {connect} from 'react-redux'
+import { getPostsThunk, delPostFullThunk } from '../../redux/reducer'
+import { connect } from 'react-redux'
+import preloader from './../../assets/images/5.svg'
 
 class PostsListContainer extends React.Component {
     componentDidMount() {
@@ -10,17 +11,18 @@ class PostsListContainer extends React.Component {
 
     render() {
         return <>
-            {/* {this.props.loading ? <img src={preloader}/> : null}  */}
-            <PostsList 
-            posts={this.props.posts} 
-            delPostFull={this.props.delPostFull}/>
+            {this.props.loader
+                ? <img src={preloader} alt=""/>
+                : <PostsList 
+                posts={this.props.posts} 
+                delPostFull={this.props.delPostFull}/>}
         </>
     }
 }
 
 let mapStateToProps = (state) => ({
     posts: state.posts,
-    loading: state.loading
+    loader: state.loader
 })
 
 let mapDispatchToProps = (dispatch) => ({

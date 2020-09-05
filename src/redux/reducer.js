@@ -11,7 +11,7 @@ const LOADING= 'LOADING'
 let initialState = {
     posts: [],
     postFull: [],
-    loading: false
+    loader: false
 }
 
 const reducer = ( state=initialState, action ) => {
@@ -23,7 +23,7 @@ const reducer = ( state=initialState, action ) => {
         return { ...state, postFull: action.postFull }
       }
       case LOADING: {
-        return { ...state.loading, loading: action.load }
+        return { ...state, loader: action.toggleLoader }
       }
       case DEL_POST_FULL: {
         return {
@@ -58,7 +58,6 @@ const reducer = ( state=initialState, action ) => {
     }
 }
 // Action Creators
-
 export const getPosts = (posts) => ({type: GET_POSTS, posts})
 export const getPostFull = (postFull) => ({type: GET_POST_FULL, postFull})
 
@@ -83,41 +82,49 @@ export const addPost = (title, text, img) => {
   }
 }
 
-export const loadingActionCreator = (load) => ({type: LOADING, load})
+export const toggleValueOfLoader = (toggleLoader) => ({type: LOADING, toggleLoader})
 
 // Thunk
-
 export const getPostsThunk = () => (dispatch) => {
-  // dispatch(loadingActionCreator(true))
-  postsAPI.getPosts().then(response=> {
+  dispatch(toggleValueOfLoader(true))
+  postsAPI.getPosts().then(response => {
     dispatch(getPosts(response))
+    dispatch(toggleValueOfLoader(false))
   })
 }
 
 export const getPostFullThunk = (postId) => (dispatch) => {
+    dispatch(toggleValueOfLoader(true))
     postsAPI.getPosts(postId).then(response => {
         dispatch(getPostFull(response))
+        dispatch(toggleValueOfLoader(false))
     })
 }
 
 export const delPostFullThunk = (postId) => (dispatch) => {
+  dispatch(toggleValueOfLoader(true))
   if (global.confirm('Вы действительно хотите удалить статью?')) {
     postsAPI.delPost(postId).then(resopnse => { 
       dispatch(delPostFull(postId))
+      dispatch(toggleValueOfLoader(false))
     })
   }
 }
 
 export const addPostThunk = (title, text, img) => (dispatch) => {
+  dispatch(toggleValueOfLoader(true))
   postsAPI.addPost(title, text, img).then(response => {
     dispatch(addPost(title, text, img))
+    dispatch(toggleValueOfLoader(false))
   })
 }
 
 export const editPostThunk = (title, text, imageUrl, postId) => (dispatch) => {
   if (global.confirm('Вы действительно хотите изменить статью?')) {
+    dispatch(toggleValueOfLoader(true))
     postsAPI.editPost(title, text, imageUrl, postId).then(response => {
       dispatch(editPost(title, text, imageUrl, postId))
+      dispatch(toggleValueOfLoader(false))
     })
   }
 }

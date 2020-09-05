@@ -8,8 +8,9 @@ let mapDispatchToProps = (dispatch) => ({
         }
 })
 
-let mapStateToProps = (state) => {
-    return state
-}
+let mapStateToProps = (state) => ({
+    // state: state,
+    loader: state.loader
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditPost)
