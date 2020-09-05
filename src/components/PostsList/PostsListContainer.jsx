@@ -9,7 +9,12 @@ class PostsListContainer extends React.Component {
     }
 
     render() {
-        return <PostsList posts={this.props.posts} delPostFull={this.props.delPostFull}/>
+        return <>
+            {/* {this.props.loading ? <img src={preloader}/> : null}  */}
+            <PostsList 
+            posts={this.props.posts} 
+            delPostFull={this.props.delPostFull}/>
+        </>
     }
 }
 

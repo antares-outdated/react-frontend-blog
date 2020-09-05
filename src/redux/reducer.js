@@ -1,13 +1,17 @@
 import {postsAPI} from '../api/api'
+import {updateObjectInArray} from './../utils/object-helpers'
+
 const GET_POSTS = 'GET_POSTS'
 const GET_POST_FULL = 'GET_POST_FULL'
 const DEL_POST_FULL = 'DEL_POST_FULL'
 const ADD_POST = 'ADD_POST'
 const EDIT_POST= 'EDIT_POST'
+const LOADING= 'LOADING'
 
 let initialState = {
     posts: [],
     postFull: [],
+    loading: false
 }
 
 const reducer = ( state=initialState, action ) => {
@@ -17,6 +21,9 @@ const reducer = ( state=initialState, action ) => {
       }
       case GET_POST_FULL: {
         return { ...state, postFull: action.postFull }
+      }
+      case LOADING: {
+        return { ...state.loading, loading: action.load }
       }
       case DEL_POST_FULL: {
         return {
@@ -32,7 +39,8 @@ const reducer = ( state=initialState, action ) => {
           img: action.imageUrl
         }
         return {
-          posts: [...state.posts.map(post => post._id === action.postId), editPost ]
+          ...state.posts,
+          posts: updateObjectInArray(state.posts, action.postId, '_id', editPost)
         }
       }
       case ADD_POST: {
@@ -49,6 +57,7 @@ const reducer = ( state=initialState, action ) => {
         return state
     }
 }
+// Action Creators
 
 export const getPosts = (posts) => ({type: GET_POSTS, posts})
 export const getPostFull = (postFull) => ({type: GET_POST_FULL, postFull})
@@ -58,7 +67,7 @@ export const delPostFull = (postId) => ({type: DEL_POST_FULL, postId})
 export const editPost = (title, text, imageUrl, postId) => {
   return {
     type: EDIT_POST,
-    _id: postId,
+    postId: postId,
     title: title,
     text: text,
     imageUrl: imageUrl
@@ -74,7 +83,12 @@ export const addPost = (title, text, img) => {
   }
 }
 
+export const loadingActionCreator = (load) => ({type: LOADING, load})
+
+// Thunk
+
 export const getPostsThunk = () => (dispatch) => {
+  // dispatch(loadingActionCreator(true))
   postsAPI.getPosts().then(response=> {
     dispatch(getPosts(response))
   })
@@ -103,7 +117,7 @@ export const addPostThunk = (title, text, img) => (dispatch) => {
 export const editPostThunk = (title, text, imageUrl, postId) => (dispatch) => {
   if (global.confirm('Вы действительно хотите изменить статью?')) {
     postsAPI.editPost(title, text, imageUrl, postId).then(response => {
-      dispatch(editPost(title, text, imageUrl))
+      dispatch(editPost(title, text, imageUrl, postId))
     })
   }
 }
