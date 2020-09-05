@@ -2,16 +2,13 @@ import preloader from './../../assets/images/5.svg'
 import React from 'react'
 import {NavLink} from 'react-router-dom'
 
+import {editPostThunk} from './../../redux/reducer'
+import {connect} from 'react-redux'
+
 const EditPost = (props) => {
     const title = React.createRef()
     const img = React.createRef()
     const text = React.createRef()
-
-    // const localState = {
-    //     title: props.title,
-    //     imageUrl: props.imgUrl,
-    //     text: props.text
-    // }
 
     const editPost = () => {
         props.EditPostThunk(title.current.value, text.current.value, img.current.value, props.match.params.postId)
@@ -38,8 +35,16 @@ const EditPost = (props) => {
             <NavLink to='/posts'><button className='btn btn-primary ml-2 '  onClick={editPost}>edit post</button></NavLink>
         </div>}
 </>
-
-    
 }
 
-export default EditPost
+let mapDispatchToProps = (dispatch) => ({
+    EditPostThunk: (title, text, img, id) => {
+        dispatch(editPostThunk(title, text, img, id))
+    }
+})
+
+let mapStateToProps = (state) => ({
+loader: state.loader
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditPost)

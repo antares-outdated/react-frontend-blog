@@ -45,6 +45,7 @@ const reducer = ( state=initialState, action ) => {
       }
       case ADD_POST: {
         let newPost = {
+          _id: '',
           title: action.title,
           text: action.text,
           img: action.img

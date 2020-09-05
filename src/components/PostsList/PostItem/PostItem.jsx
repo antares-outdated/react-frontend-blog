@@ -2,21 +2,22 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import './../../../App.css'
 
-const PostItem = (props) => {
-    const delPostFull = () => {
-        props.delPostFull(props.postId)
+const PostItem = ({postId, delPostFull, title, text, createdAt}) => {
+    const delPost = () => {
+        delPostFull(postId)
     }
 
     return (
         <div>
             <div>
-                <NavLink className='font-weight-bold' to={`/posts/${props.postId}`}><h3>{props.title}</h3></NavLink>
+                <NavLink className='font-weight-bold text-dark ' to={`/posts/${postId}`}><h3>{title}</h3></NavLink>
+                <p className='mb-2 font-weight-light'>{text}</p>
                 
-                <p className='mb-2 font-weight-light post-item'>{props.text}</p>
+                <p className='m-0'>Posted on <i>{createdAt}</i></p>
 
-                <NavLink to={`/edit/${props.postId}`}><button className='btn btn-outline-primary btn-sm'>edit</button></NavLink>
-                <button onClick={delPostFull} className='btn btn-outline-primary btn-sm ml-2'>delete</button>
-            </div> 
+                <NavLink to={`/edit/${postId}`} className='text-dark font-italic m-0'>edit</NavLink>
+                <a onClick={delPost} className='text-dark cursor-pointer font-italic ml-2'>delete</a>
+            </div>
             <br/>
         </div>
     )

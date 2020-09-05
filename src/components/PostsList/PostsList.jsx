@@ -8,12 +8,13 @@ const PostsList = (props) => {
     key={el._id}
     title={el.title}
     text={el.text}
+    createdAt={el.createdAt}
     delPostFull={props.delPostFull}
     />)
 
     return (
         <div>
-            <NavLink to={`addpost`}><button className='btn btn-primary my-4'>create new post</button></NavLink>
+            <NavLink to={`addpost`}><button className='btn btn-dark my-4'>create new post</button></NavLink>
             {PostItemEl}
         </div>
     )
