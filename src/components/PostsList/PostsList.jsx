@@ -9,6 +9,7 @@ const PostsList = (props) => {
     title={el.title}
     text={el.text}
     createdAt={el.createdAt}
+    updatedAt={el.updatedAt}
     delPostFull={props.delPostFull}
     />)
 

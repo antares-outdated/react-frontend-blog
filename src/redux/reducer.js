@@ -121,13 +121,11 @@ export const addPostThunk = (title, text, img) => (dispatch) => {
 }
 
 export const editPostThunk = (title, text, imageUrl, postId) => (dispatch) => {
-  if (global.confirm('Вы действительно хотите изменить статью?')) {
     dispatch(toggleValueOfLoader(true))
     postsAPI.editPost(title, text, imageUrl, postId).then(response => {
       dispatch(editPost(title, text, imageUrl, postId))
       dispatch(toggleValueOfLoader(false))
     })
-  }
 }
 
 export default reducer

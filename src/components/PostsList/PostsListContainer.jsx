@@ -21,8 +21,8 @@ class PostsListContainer extends React.Component {
 }
 
 let mapStateToProps = (state) => ({
-    posts: state.posts,
-    loader: state.loader
+    posts: state.reducer.posts,
+    loader: state.reducer.loader
 })
 
 let mapDispatchToProps = (dispatch) => ({
