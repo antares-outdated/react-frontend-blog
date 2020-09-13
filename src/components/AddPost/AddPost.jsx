@@ -1,5 +1,4 @@
 import { addPostThunk } from './../../redux/reducer'
-import preloader from './../../assets/images/5.svg'
 import { connect } from 'react-redux'
 import React from 'react'
 import { NavLink, useHistory } from 'react-router-dom'
@@ -8,10 +7,8 @@ import { Field, reduxForm } from 'redux-form'
 
 const AddPostForm = (props) => {
 
-    return <>
-        {props.loader
-            ? <img src={preloader} alt="" />
-            : <form onSubmit={props.handleSubmit}>
+    return <> 
+    <form onSubmit={props.handleSubmit}>
                 <div className="input-group my-3">
                     <Field className="form-control" placeholder='title' name='title' component='input' />
                     <div className="input-group-append"></div>
@@ -28,7 +25,7 @@ const AddPostForm = (props) => {
                 <NavLink to={`/posts`}><button className='btn btn-secondary my-3'>back</button></NavLink>
 
                 <button className='btn btn-primary my-3 ml-2'>add post</button>
-            </form>}
+            </form>
     </>
 }
 

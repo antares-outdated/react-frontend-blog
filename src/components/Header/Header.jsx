@@ -1,19 +1,22 @@
 import React from 'react'
-import {connect} from 'react-redux'
+import { NavLink } from 'react-router-dom'
 
-const Header = ({post}) => {
-    return (
-        <div className={'header'}>
-            <img className={'header-images'} src={'https://www.meme-arsenal.com/memes/87e1930fae8215ce9028a1f7f5df2f6f.jpg'}/>
-            <div className={'header-text'}>
-                <h2>Blog of Maria Berestova</h2>
+export default function Header() {
+    return <div className={'header'}>
+    <div className='container'>
+            <div className={'d-flex align-items-center justify-content-between header-inner'}>
+                    <div className={'header-text text-light'}>
+                        <h3 className='m-0'>BLOG OF</h3>
+                        <h5 className='font-weight-bold m-0'>Maria Berestovaya</h5>
+                    </div>
+
+                    <NavLink to={`/newpost`}>
+                        <button className='btn btn-light btn-lg my-4'>
+                        <svg width="1.4em" height="1.4em" viewBox="0 0 16 16" className="bi bi-plus-square-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fillRule="evenodd" d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+                        </svg>  ADD POST</button>
+                </NavLink>
+            </div>
             </div>
         </div>
-    )
 }
-
-const mapStateToProps = (state) => ({
-    post: state.postFull
-})
-
-export default connect(mapStateToProps, null)(Header)

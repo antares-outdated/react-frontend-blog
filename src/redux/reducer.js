@@ -74,7 +74,7 @@ export const editPost = (title, text, imageUrl, postId) => {
   }
 }
 
-export const addPost = (title, text, img) => {
+export const addPost = (title, img, text) => {
   return {
     type: ADD_POST,
     title: title,
@@ -112,19 +112,15 @@ export const delPostFullThunk = (postId) => (dispatch) => {
   }
 }
 
-export const addPostThunk = (title, text, img) => (dispatch) => {
-  dispatch(toggleValueOfLoader(true))
+export const addPostThunk = (title, img, text) => (dispatch) => {
   postsAPI.addPost(title, text, img).then(response => {
-    dispatch(addPost(title, text, img))
-    dispatch(toggleValueOfLoader(false))
+    dispatch(addPost(title, img, text))
   })
 }
 
 export const editPostThunk = (title, text, imageUrl, postId) => (dispatch) => {
-    dispatch(toggleValueOfLoader(true))
     postsAPI.editPost(title, text, imageUrl, postId).then(response => {
       dispatch(editPost(title, text, imageUrl, postId))
-      dispatch(toggleValueOfLoader(false))
     })
 }
 

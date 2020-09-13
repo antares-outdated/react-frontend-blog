@@ -1,39 +1,53 @@
-.app-wrapper {
-    display: flex;
-    justify-content: center;
-    background-color: #222;
+@import url('https://fonts.googleapis.com/css2?family=Exo:wght@300;400;500;700;800;900&display=swap');
+
+body {
+    font-family: 'Exo',s ans-serif;
 }
 
+/* App */
 .app {
     width: 500px;
-    height: 100vh;
-    background-color: #ffffff;
+    height: 100vh; 
+    background-color: #fff;
     overflow-y: auto;   
-    overflow-wrap: anywhere;   
+    overflow-wrap: anywhere; 
+    
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+.app-wrapper {
+    background-color: #D2D2D2;
 }
 
-.header-images {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-}
-
+/* Header */
 .header {
-    position: relative;
+    height: 100px;
+    background-color: #000;
+    box-shadow: 0 0 10px rgba(0,0,0,1);
+}
+.header-text h3 {
+    font-weight: 900;
+    font-size: 1.6rem;
+}
+.header .btn {
+    font-weight: 900;
 }
 
-.header-text {
-    color: #fff;
-
-    margin: 0;
-    text-align: center;
+/* Not Found */
+.main-page {
     position: absolute;
-    top: 50%;
+    bottom: 0;
     left: 50%;
     margin-right: -50%;
     transform: translate(-50%, -50%)
 }
 
-.cursor-pointer {
-    cursor: pointer;
+/* Post List and Post Item */
+.main-text {
+    overflow-y: hidden;
+    max-height: 300px;
+}
+
+/* Post Full */
+.post-full {
+    height: calc(100% - 100px);
 }

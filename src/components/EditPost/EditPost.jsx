@@ -1,4 +1,3 @@
-import preloader from './../../assets/images/5.svg'
 import React from 'react'
 import {NavLink} from 'react-router-dom'
 
@@ -15,9 +14,7 @@ const EditPost = (props) => {
     }
 
     return <>
-    {props.loader
-        ? <img src={preloader} alt=""/>
-        : <div>
+        <div>
             <div className="input-group my-3">
                 <input type="text" className="form-control" ref={title} placeholder="title" aria-label="Recipient's username" aria-describedby="basic-addon2"/>
                 <div className="input-group-append"></div>
@@ -33,8 +30,8 @@ const EditPost = (props) => {
             </div>
             <NavLink to='/posts'><button className='btn btn-secondary'>back</button></NavLink>
             <NavLink to='/posts'><button className='btn btn-primary ml-2 '  onClick={editPost}>edit post</button></NavLink>
-        </div>}
-</>
+        </div>
+    </>
 }
 
 let mapDispatchToProps = (dispatch) => ({
