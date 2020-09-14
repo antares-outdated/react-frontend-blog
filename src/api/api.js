@@ -16,7 +16,7 @@ export const postsAPI = {
         })
     },
     addPost(title, text, imageUrl) {
-        return instanse.post(`addpost`, {title, text, imageUrl}).then(response => {
+        return instanse.post(`newpost`, {title, text, imageUrl}).then(response => {
             return response.data 
         })
     },

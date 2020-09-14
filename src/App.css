@@ -20,7 +20,6 @@ body {
 
 /* Header */
 .header {
-    height: 100px;
     background-color: #000;
     box-shadow: 0 0 10px rgba(0,0,0,1);
 }
@@ -30,6 +29,12 @@ body {
 }
 .header .btn {
     font-weight: 900;
+}
+.header a:hover {
+    text-decoration: none;
+}
+.button-text {
+    margin: 0 0 0 5px;
 }
 
 /* Not Found */
@@ -49,5 +54,6 @@ body {
 
 /* Post Full */
 .post-full {
-    height: calc(100% - 100px);
+    height: 100%;
 }
+

@@ -2,9 +2,11 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import './../../App.css'
 
+import HeaderPostList from './../Header/HeaderPostList'
+
 const PostItem = ({postId, title, text, color}) => {
     const backgroundStyle = {
-        backgroundColor: `${color != null ? color : '#E5E5E5'}`
+        backgroundColor: `${color != null ? color : '#fff'}`
     }
     return (
         <div className='container'>
@@ -25,8 +27,11 @@ export default function PostsList ({posts}){
         postId={post._id}
         key={post._id}
         title={post.title}
-        color={post.imageUrl}
+        color={post.color}
         text={post.text}/>)
 
-    return  <>{Post}</> 
+    return <>
+        <HeaderPostList/>
+        {Post}
+    </> 
 }

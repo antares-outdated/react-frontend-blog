@@ -7,8 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
 
 // Components
-import Header from './components/Header/Header'
-// import AddPost from './components/AddPost/AddPost'
+import AddPost from './components/AddPost/AddPost'
 // import EditPost from './components/EditPost/EditPost'
 
 import PostsListContainer from './components/PostsList/PostsListContainer'
@@ -20,12 +19,11 @@ export default function App() {
   return <BrowserRouter>
       <div className='d-flex justify-content-center app-wrapper'>
           <div className='app'>
-            <Header />
             <Switch>
                 <Route path='/posts' exact component={PostsListContainer} />
                 <Route path='/posts/:postId' exact component={PostFull} />
                 {/* <Route path='/edit/:postId' exact component={EditPost} /> */}
-                {/* <Route path='/newpost' exact component={AddPost} /> */}
+                <Route path='/newpost' exact component={AddPost} />
                   <Route path='*' component={NotFound} />
             </Switch> 
             </div>

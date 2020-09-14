@@ -4,17 +4,20 @@ import React from 'react'
 import { NavLink, useHistory } from 'react-router-dom'
 
 import { Field, reduxForm } from 'redux-form'
+import HeaderAddPost from './../Header/HeaderAddPost'
 
 const AddPostForm = (props) => {
 
-    return <> 
-    <form onSubmit={props.handleSubmit}>
+    return <>
+        <HeaderAddPost />
+        <div className='container'>
+            <form onSubmit={props.handleSubmit}>
                 <div className="input-group my-3">
                     <Field className="form-control" placeholder='title' name='title' component='input' />
                     <div className="input-group-append"></div>
                 </div>
                 <div className="input-group mb-3">
-                    <Field className="form-control" placeholder='title' name='img' component='input' />
+                    <Field className="form-control" placeholder='color' name='color' component='input' />
                     <div className="input-group-append"></div>
                 </div>
                 <div className="input-group">
@@ -22,10 +25,8 @@ const AddPostForm = (props) => {
                     </div>
                     <Field className="form-control" placeholder='text' name='text' component='textarea' />
                 </div>
-                <NavLink to={`/posts`}><button className='btn btn-secondary my-3'>back</button></NavLink>
-
-                <button className='btn btn-primary my-3 ml-2'>add post</button>
             </form>
+        </div>
     </>
 }
 
@@ -36,16 +37,16 @@ const AddPostRedux = reduxForm({
 
 
 // Function Component
-const AddPost = ({loader, addPost}) => {
+const AddPost = ({ loader, addPost }) => {
     const history = useHistory()
 
     const onSubmit = (value) => {
-        addPost(value.title, value.img, value.text)
+        addPost(value.title, value.color, value.text)
         history.push('/posts')
 
     }
 
-    return <AddPostRedux onSubmit={onSubmit} loader={loader}/>
+    return <AddPostRedux onSubmit={onSubmit} loader={loader} />
 }
 
 // Container Component

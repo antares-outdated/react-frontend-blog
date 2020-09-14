@@ -48,7 +48,7 @@ const reducer = ( state=initialState, action ) => {
           _id: '',
           title: action.title,
           text: action.text,
-          img: action.img
+          color: action.color
         }
         return { 
           ...state, 
@@ -74,12 +74,12 @@ export const editPost = (title, text, imageUrl, postId) => {
   }
 }
 
-export const addPost = (title, img, text) => {
+export const addPost = (title, color, text) => {
   return {
     type: ADD_POST,
     title: title,
     text: text,
-    imageUrl: img
+    color: color
   }
 }
 
@@ -112,9 +112,9 @@ export const delPostFullThunk = (postId) => (dispatch) => {
   }
 }
 
-export const addPostThunk = (title, img, text) => (dispatch) => {
-  postsAPI.addPost(title, text, img).then(response => {
-    dispatch(addPost(title, img, text))
+export const addPostThunk = (title, color, text) => (dispatch) => {
+  postsAPI.addPost(title, text, color).then(response => {
+    dispatch(addPost(title, color, text))
   })
 }
 
