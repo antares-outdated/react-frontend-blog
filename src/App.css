@@ -1,19 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Exo:wght@300;400;500;700;800;900&display=swap');
 
 body {
-    font-family: 'Exo',s ans-serif;
+    font-family: 'Exo', s ans-serif;
 }
 
 /* App */
 .app {
     width: 500px;
-    height: 100vh; 
+    height: 100vh;
     background-color: #fff;
-    overflow-y: auto;   
-    overflow-wrap: anywhere; 
-    
-    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    overflow-y: auto;
+    overflow-wrap: anywhere;
+
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
+
 .app-wrapper {
     background-color: #D2D2D2;
 }
@@ -21,18 +22,22 @@ body {
 /* Header */
 .header {
     background-color: #000;
-    box-shadow: 0 0 10px rgba(0,0,0,1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 1);
 }
+
 .header-text h3 {
     font-weight: 900;
     font-size: 1.6rem;
 }
+
 .header .btn {
     font-weight: 900;
 }
+
 .header a:hover {
     text-decoration: none;
 }
+
 .button-text {
     margin: 0 0 0 5px;
 }
@@ -56,4 +61,3 @@ body {
 .post-full {
     height: 100%;
 }
-

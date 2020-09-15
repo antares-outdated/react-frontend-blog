@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { withRouter, Redirect } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 
@@ -9,22 +9,22 @@ import { getPostFullThunk } from './../../redux/reducer.js'
 
 import HeaderPostFull from './../Header/HeaderPostFull'
 
-const PostFull = ({ post }) => {
-    if (post === undefined) {
-        return <Redirect to='/posts' />
-    } else {
+const PostFull = ({ post = null }) => {
+    if(post !== null) {
         const backgroundStyle = {
             backgroundColor: `${post.color != null ? post.color : '#fff'}`
         }
         return (
             <div style={backgroundStyle} className='post-full'>
-                <HeaderPostFull />
+                <HeaderPostFull post={post} />
                 <div className='container'>
                     <h1 className='pt-4'>{post.title}</h1>
                     <p className='m-0'>{post.text}</p>
                 </div>
             </div>
         )
+    } else {
+        return null
     }
 }
 

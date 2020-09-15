@@ -7,23 +7,23 @@ const instanse = axios.create({
 export const postsAPI = {
     getPosts(postId) {
         return instanse.get(`posts${postId ? '/' + postId : ''}`).then(response => {
-            return response.data 
+            return response
         })
     },
     delPost(postId) {
         return instanse.delete(`posts/${postId}`).then(response => {
-            return response.data 
+            return response
         })
     },
-    addPost(title, text, imageUrl) {
-        return instanse.post(`newpost`, {title, text, imageUrl}).then(response => {
-            return response.data 
+    addPost(title, text, color) {
+        return instanse.post(`newpost`, { title, text, color }).then(response => {
+            debugger
+            return response
         })
     },
-
     editPost(title, text, imageUrl, postId) {
-        return instanse.patch(`edit/${postId}`, {title, text, imageUrl}).then(response => {
-            return response.data 
+        return instanse.patch(`edit/${postId}`, { title, text, imageUrl }).then(response => {
+            return response
         })
     }
 }

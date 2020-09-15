@@ -1,29 +1,28 @@
 import { addPostThunk } from './../../redux/reducer'
 import { connect } from 'react-redux'
 import React from 'react'
-import { NavLink, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 import { Field, reduxForm } from 'redux-form'
 import HeaderAddPost from './../Header/HeaderAddPost'
 
 const AddPostForm = (props) => {
-
     return <>
         <HeaderAddPost />
         <div className='container'>
             <form onSubmit={props.handleSubmit}>
                 <div className="input-group my-3">
-                    <Field className="form-control" placeholder='title' name='title' component='input' />
+                    <Field className="form-control rounded" placeholder='Title Post' name='title' component='input' />
                     <div className="input-group-append"></div>
                 </div>
-                <div className="input-group mb-3">
-                    <Field className="form-control" placeholder='color' name='color' component='input' />
+                <div className="input-group my-3">
+                    <Field className="form-control rounded" placeholder='Color' name='bg' component='input' />
                     <div className="input-group-append"></div>
                 </div>
                 <div className="input-group">
                     <div className="input-group-prepend">
                     </div>
-                    <Field className="form-control" placeholder='text' name='text' component='textarea' />
+                    <Field className="form-control rounded" placeholder='Here write the text of the post' rows="5" name='text' component='textarea' />
                 </div>
             </form>
         </div>
@@ -41,7 +40,7 @@ const AddPost = ({ loader, addPost }) => {
     const history = useHistory()
 
     const onSubmit = (value) => {
-        addPost(value.title, value.color, value.text)
+        addPost(value.title, value.bg, value.text)
         history.push('/posts')
 
     }
@@ -56,8 +55,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        addPost: (title, img, text) => {
-            dispatch(addPostThunk(title, img, text))
+        addPost: (title, color, text) => {
+            dispatch(addPostThunk(title, color, text))
         }
     }
 }

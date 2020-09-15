@@ -1,80 +1,78 @@
-import {postsAPI} from '../api/api'
-import {updateObjectInArray} from './../utils/object-helpers'
+import { postsAPI } from '../api/api'
+import { updateObjectInArray } from './../utils/object-helpers'
 
 const GET_POSTS = 'GET_POSTS'
 const GET_POST_FULL = 'GET_POST_FULL'
 const DEL_POST_FULL = 'DEL_POST_FULL'
+const EDIT_POST = 'EDIT_POST'
 const ADD_POST = 'ADD_POST'
-const EDIT_POST= 'EDIT_POST'
-const LOADING= 'LOADING'
+const LOADING = 'LOADING'
 
 let initialState = {
-    posts: [],
-    postFull: [],
-    loader: false
+  posts: [],
+  postFull: [],
+  loader: false
 }
 
-const reducer = ( state=initialState, action ) => {
-    switch(action.type) {
-      case GET_POSTS: {
-        return { ...state, posts: action.posts }
-      }
-      case GET_POST_FULL: {
-        return { ...state, postFull: action.postFull }
-      }
-      case LOADING: {
-        return { ...state, loader: action.toggleLoader }
-      }
-      case DEL_POST_FULL: {
-        return {
-          ...state.posts,
-          posts: [...state.posts.filter(id => id._id !== action.postId)]
-        }
-      }
-      case EDIT_POST: {
-        let editPost = {
-          _id: action.postId,
-          title: action.title,
-          description: action.text,
-          img: action.imageUrl
-        }
-        return {
-          ...state.posts,
-          posts: updateObjectInArray(state.posts, action.postId, '_id', editPost)
-        }
-      }
-      case ADD_POST: {
-        let newPost = {
-          _id: '',
-          title: action.title,
-          text: action.text,
-          color: action.color
-        }
-        return { 
-          ...state, 
-          posts: [...state.posts, newPost] }
-      }
-      default: 
-        return state
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    case GET_POSTS: {
+      return { ...state, posts: action.posts }
     }
+    case GET_POST_FULL: {
+      return { ...state, postFull: action.postFull }
+    }
+    case DEL_POST_FULL: {
+      return {
+        ...state.posts,
+        posts: [...state.posts.filter(id => id._id !== action.postId)]
+      }
+    }
+    case EDIT_POST: {
+      let editPost = {
+        _id: action.postId,
+        title: action.title,
+        text: action.text,
+        color: action.color
+      }
+      return {
+        ...state.posts,
+        posts: updateObjectInArray(state.posts, action.postId, '_id', editPost)
+      }
+    }
+    case ADD_POST: {
+      let newPost = {
+        _id: '',
+        title: action.title,
+        text: action.text,
+        color: action.color
+      }
+      return {
+        ...state,
+        posts: [...state.posts, newPost]
+      }
+    }
+    case LOADING: {
+      return { ...state, loader: action.toggleLoader }
+    }
+    default:
+      return state
+  }
 }
 // Action Creators
-export const getPosts = (posts) => ({type: GET_POSTS, posts})
-export const getPostFull = (postFull) => ({type: GET_POST_FULL, postFull})
-
-export const delPostFull = (postId) => ({type: DEL_POST_FULL, postId})
-
-export const editPost = (title, text, imageUrl, postId) => {
+const getPosts = (posts) => ({ type: GET_POSTS, posts })
+const getPostFull = (postFull) => ({ type: GET_POST_FULL, postFull })
+const delPostFull = (postId) => ({ type: DEL_POST_FULL, postId })
+const editPost = (title, text, color, postId) => {
   return {
     type: EDIT_POST,
     postId: postId,
     title: title,
     text: text,
-    imageUrl: imageUrl
+    color: color
   }
 }
-
-export const addPost = (title, color, text) => {
+const addPost = (title, color, text) => {
   return {
     type: ADD_POST,
     title: title,
@@ -82,50 +80,64 @@ export const addPost = (title, color, text) => {
     color: color
   }
 }
-
-export const toggleValueOfLoader = (toggleLoader) => ({type: LOADING, toggleLoader})
+const toggleValueOfLoader = (toggleLoader) => ({ type: LOADING, toggleLoader })
 
 // Thunk
-export const getPostsThunk = () => (dispatch) => {
+export const getPostsThunk = () => async (dispatch) => {
   dispatch(toggleValueOfLoader(true))
-  postsAPI.getPosts().then(response => {
-    dispatch(getPosts(response))
+  
+  let response = await postsAPI.getPosts()
+
+  if(response.status === 200) {
+    dispatch(getPosts(response.data))
     dispatch(toggleValueOfLoader(false))
-  })
-}
-
-export const getPostFullThunk = (postId) => (dispatch) => {
-    dispatch(toggleValueOfLoader(true))
-    postsAPI.getPosts(postId).then(response => {
-        dispatch(getPostFull(response))
-        dispatch(toggleValueOfLoader(false))
-    })
-}
-
-export const delPostFullThunk = (postId) => (dispatch) => {
-  dispatch(toggleValueOfLoader(true))
-  if (global.confirm('Вы действительно хотите удалить статью?')) {
-    postsAPI.delPost(postId).then(resopnse => { 
-      dispatch(delPostFull(postId))
-      dispatch(toggleValueOfLoader(false))
-    })
   }
 }
 
-export const addPostThunk = (title, color, text) => (dispatch) => {
-  postsAPI.addPost(title, text, color).then(response => {
+export const getPostFullThunk = (postId) => async (dispatch) => {
+  dispatch(toggleValueOfLoader(true))
+
+  let response = await postsAPI.getPosts(postId)
+
+  if(response.status === 200) {
+    dispatch(getPostFull(response.data))
+    dispatch(toggleValueOfLoader(false))
+  }
+}
+
+export const delPostFullThunk = (postId) => async (dispatch) => {
+  if (global.confirm('Вы действительно хотите удалить статью?')) {
+    dispatch(toggleValueOfLoader(true))
+
+    let response = await postsAPI.delPost(postId)
+    if(response.status === 200) {
+      dispatch(delPostFull(postId))
+      dispatch(toggleValueOfLoader(false))
+    }
+  }
+}
+
+export const addPostThunk = (title, color, text) => async (dispatch) => {
+  dispatch(toggleValueOfLoader(true))
+
+  let response = await postsAPI.addPost(title, text, color)
+  if(response.status === 200) {
     dispatch(addPost(title, color, text))
-  })
+    dispatch(toggleValueOfLoader(false))
+  }
 }
 
 export const editPostThunk = (title, text, imageUrl, postId) => (dispatch) => {
-    postsAPI.editPost(title, text, imageUrl, postId).then(response => {
-      dispatch(editPost(title, text, imageUrl, postId))
-    })
+  dispatch(toggleValueOfLoader(true))
+
+  let response = postsAPI.editPost(title, text, imageUrl, postId)
+
+  if(response.status === 200) {
+    dispatch(editPost(title, text, imageUrl, postId))
+    dispatch(toggleValueOfLoader(false))
+  }
 }
 
 export default reducer
-
-
 
 
