@@ -1,49 +1,68 @@
 import React from 'react'
 
-import {editPostThunk} from './../../redux/reducer'
-import {connect} from 'react-redux'
+import { editPostThunk } from './../../redux/reducer'
+import { connect } from 'react-redux'
+import {compose} from 'redux'
 
-import HeaderAddPost from './../Header/HeaderAddPost'
+import { Field, reduxForm } from 'redux-form'
 
-const EditPost = (props) => {
-    const title = React.createRef()
-    const img = React.createRef()
-    const text = React.createRef()
+import {useHistory, withRouter} from 'react-router-dom'
 
-    // const editPost = () => {
-    //     props.EditPostThunk(title.current.value, text.current.value, img.current.value, props.match.params.postId)
-    // }
+import HeaderEditPost from './../Header/HeaderEditPost'
 
+const EditPostForm = (props) => {
     return <>
-    <HeaderAddPost/>
+        <HeaderEditPost />
         <div className='container'>
             <div>
                 <div className="input-group my-3">
-                    <input type="text" className="form-control rounded" ref={title} placeholder="Title Post" aria-label="Recipient's username" aria-describedby="basic-addon2"/>
+                    <Field type="text" className="form-control rounded" placeholder="Title Post"
+                    name='title' component='input' aria-label="Recipient's username" aria-describedby="basic-addon2" />
                     <div className="input-group-append"></div>
                 </div>
-                <div className="input-group">
-                    <input type="text" className="form-control rounded" ref={img} placeholder="Color" aria-label="Recipient's username" aria-describedby="basic-addon2"/>
+                <div className="input-group my-3">
+                    <Field className="form-control rounded" placeholder='Color' name='bg' component='input' />
                     <div className="input-group-append"></div>
                 </div>
                 <div className="input-group my-3">
                     <div className="input-group-prepend">
                     </div>
-                    <textarea className="form-control rounded" aria-label="With textarea" ref={text} placeholder="Here write the text of the post"></textarea>
+                    <Field className="form-control rounded" aria-label="With textarea" 
+                    rows="5" name='text' component='textarea' placeholder="Here write the text of the post"></Field>
                 </div>
             </div>
         </div>
     </>
 }
 
+const EditPostRedux = reduxForm({
+    form: 'editpost-form'
+})(EditPostForm)
+
+const EditPost = ({editPost, ...props}) => {
+    const history = useHistory()
+    const id = props.match.params.postId
+
+    //EditPostRedux
+    const onSubmit = (value) => {
+        editPost(value.title, value.text, value.bg, id)
+        history.push('/posts')
+    }
+
+    return <EditPostRedux onSubmit={onSubmit}/>
+}
+
 let mapDispatchToProps = (dispatch) => ({
-    EditPostThunk: (title, text, img, id) => {
-        dispatch(editPostThunk(title, text, img, id))
+    editPost: (title, text, color, id) => {
+        dispatch(editPostThunk(title, text, color, id))
     }
 })
 
 let mapStateToProps = (state) => ({
-loader: state.loader
+    loader: state.loader
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditPost)
+export default compose (
+    withRouter,
+    connect(mapStateToProps, mapDispatchToProps)
+)(EditPost)

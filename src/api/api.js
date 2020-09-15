@@ -17,12 +17,11 @@ export const postsAPI = {
     },
     addPost(title, text, color) {
         return instanse.post(`newpost`, { title, text, color }).then(response => {
-            debugger
             return response
         })
     },
-    editPost(title, text, imageUrl, postId) {
-        return instanse.patch(`edit/${postId}`, { title, text, imageUrl }).then(response => {
+    editPost(title, text, color, postId) {
+        return instanse.patch(`edit/${postId}`, { title, text, color }).then(response => {
             return response
         })
     }

@@ -42,7 +42,7 @@ const reducer = (state = initialState, action) => {
     }
     case ADD_POST: {
       let newPost = {
-        _id: '',
+        _id: action.id,
         title: action.title,
         text: action.text,
         color: action.color
@@ -72,9 +72,10 @@ const editPost = (title, text, color, postId) => {
     color: color
   }
 }
-const addPost = (title, color, text) => {
+const addPost = (title, color, text, id) => {
   return {
     type: ADD_POST,
+    id: id,
     title: title,
     text: text,
     color: color
@@ -122,18 +123,18 @@ export const addPostThunk = (title, color, text) => async (dispatch) => {
 
   let response = await postsAPI.addPost(title, text, color)
   if(response.status === 200) {
-    dispatch(addPost(title, color, text))
+    dispatch(addPost(title, color, text, response.data))
     dispatch(toggleValueOfLoader(false))
   }
 }
 
-export const editPostThunk = (title, text, imageUrl, postId) => (dispatch) => {
+export const editPostThunk = (title, text, color, postId) => async (dispatch) => {
   dispatch(toggleValueOfLoader(true))
 
-  let response = postsAPI.editPost(title, text, imageUrl, postId)
+  let response = await postsAPI.editPost(title, text, color, postId)
 
   if(response.status === 200) {
-    dispatch(editPost(title, text, imageUrl, postId))
+    dispatch(editPost(title, text, color, postId))
     dispatch(toggleValueOfLoader(false))
   }
 }
