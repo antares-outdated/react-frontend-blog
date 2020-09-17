@@ -2,67 +2,89 @@ import React from 'react'
 
 import { editPostThunk } from './../../redux/reducer'
 import { connect } from 'react-redux'
-import {compose} from 'redux'
+import { compose } from 'redux'
 
-import { Field, reduxForm } from 'redux-form'
-
-import {useHistory, withRouter} from 'react-router-dom'
+import { Redirect, withRouter } from 'react-router-dom'
 
 import HeaderEditPost from './../Header/HeaderEditPost'
 
-const EditPostForm = (props) => {
+const EditPost = (props) => {
     return <>
-        <HeaderEditPost />
-        <div className='container'>
-            <div>
-                <div className="input-group my-3">
-                    <Field type="text" className="form-control rounded" placeholder="Title Post"
-                    name='title' component='input' aria-label="Recipient's username" aria-describedby="basic-addon2" />
-                    <div className="input-group-append"></div>
+        <HeaderEditPost onChangePost={props.onChangePost}/>
+                <div className='container'>
+                    <form>
+                        <div className="input-group my-3">
+                            <input
+                                type="text"
+                                className="form-control rounded"
+                                placeholder="Title Post"
+                                value={props.state.title}
+                                onChange={props.onChangeTitle}
+                                required />
+                        </div>
+
+                        <div className="input-group my-3">
+                            <input
+                                className="form-control rounded"
+                                placeholder='Color'
+                                value={props.state.color}
+                                onChange={props.onChangeColor}
+                                required />
+                        </div>
+
+                        <div className="input-group my-3">
+                            <textarea
+                                className="form-control rounded"
+                                rows="5"
+                                value={props.state.text}
+                                onChange={props.onChangeText}
+                                placeholder="Here write the text of the post"
+                                required />
+                        </div>
+                    </form>
                 </div>
-                <div className="input-group my-3">
-                    <Field className="form-control rounded" placeholder='Color' name='bg' component='input' />
-                    <div className="input-group-append"></div>
-                </div>
-                <div className="input-group my-3">
-                    <div className="input-group-prepend">
-                    </div>
-                    <Field className="form-control rounded" aria-label="With textarea" 
-                    rows="5" name='text' component='textarea' placeholder="Here write the text of the post"></Field>
-                </div>
-            </div>
-        </div>
-    </>
+            </>
 }
 
-const EditPostRedux = reduxForm({
-    form: 'editpost-form'
-})(EditPostForm)
+class EditPostContainer extends React.Component {
+    id = this.props.match.params.postId
 
-const EditPost = ({editPost, ...props}) => {
-    const history = useHistory()
-    const id = props.match.params.postId
-
-    //EditPostRedux
-    const onSubmit = (value) => {
-        editPost(value.title, value.text, value.bg, id)
-        history.push('/posts')
+    state = {
+        title: this.props.post.title,
+        text: this.props.post.text,
+        color: this.props.post.color
     }
 
-    return <EditPostRedux onSubmit={onSubmit}/>
-}
+    onChangeTitle = (e) => { this.setState({title: e.currentTarget.value}) }
+    onChangeText = (e) => { this.setState({text: e.currentTarget.value}) }
+    onChangeColor = (e) => { this.setState({color: e.currentTarget.value}) }
 
-let mapDispatchToProps = (dispatch) => ({
+    onChangePost = () => {
+        this.props.editPost(this.state.title, this.state.text, this.state.color, this.id)
+        this.props.history.push('/posts')
+    }
+
+    
+
+    render() {
+        return <>
+            {this.props.post.length !== 0 ? <EditPost props={this.props} state={this.state}/> : <Redirect to='/posts'/>}
+            
+        </>
+    }
+}
+const mapDispatchToProps = (dispatch) => ({
     editPost: (title, text, color, id) => {
         dispatch(editPostThunk(title, text, color, id))
-    }
+    },
 })
 
-let mapStateToProps = (state) => ({
-    loader: state.loader
+const mapStateToProps = (state) => ({
+    post: state.reducer.postFull,
+    loader: state.reducer.loader
 })
 
-export default compose (
+export default compose(
     withRouter,
     connect(mapStateToProps, mapDispatchToProps)
-)(EditPost)
+)(EditPostContainer)
