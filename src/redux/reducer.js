@@ -119,12 +119,12 @@ export const delPostFullThunk = (postId) => async (dispatch) => {
 }
 
 export const addPostThunk = (title, color, text) => async (dispatch) => {
-  dispatch(toggleValueOfLoader(true))
+  // dispatch(toggleValueOfLoader(true))
 
   let response = await postsAPI.addPost(title, text, color)
   if(response.status === 200) {
     dispatch(addPost(title, color, text, response.data))
-    dispatch(toggleValueOfLoader(false))
+    // dispatch(toggleValueOfLoader(false))
   }
 }
 
